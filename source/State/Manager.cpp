@@ -8,6 +8,7 @@ void Manager::init(SDL_Renderer *zRenderer,
                    int width, int height,
                    bool fullscreen)
 {
+    romfsInit();
     this->zRenderer = zRenderer;
     this->zWindow = zWindow;
     m_running = true;
@@ -34,6 +35,7 @@ void Manager::cleanup()
     zRenderer = NULL;
     
     // Final clean up
+    romfsExit();
     TTF_Quit();
     IMG_Quit();
     SDL_Quit();

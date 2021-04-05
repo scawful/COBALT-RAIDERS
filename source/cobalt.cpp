@@ -1,4 +1,4 @@
-// Program: Bullet Hell
+// Program: Cobalt Raiders
 // Author: scawful
 // Date Created: 04/04/2021
 // Platform: Nintendo Switch
@@ -7,11 +7,15 @@
 
 #include "State/Manager.hpp"
 #include "State/MenuState.hpp"
+#include "State/GameState.hpp"
+
 
 int main (int argc, char* argv[])
 {
+    consoleDebugInit(debugDevice_SVC);
+
     SDL_Renderer *zRenderer = NULL;
-    SDL_Window *zWindow;
+    SDL_Window *zWindow = NULL;
     
     const int SCREEN_WIDTH = 1920;
     const int SCREEN_HEIGHT = 1080;
@@ -24,7 +28,7 @@ int main (int argc, char* argv[])
     {
         // Create an application window with the following settings:
         zWindow = SDL_CreateWindow(
-            "Bullet Hell",                      // window title
+            "Cobalt Raiders",                   // window title
             SDL_WINDOWPOS_UNDEFINED,            // initial x position
             SDL_WINDOWPOS_UNDEFINED,            // initial y position
             SCREEN_WIDTH,                       // width, in pixels
@@ -64,6 +68,16 @@ int main (int argc, char* argv[])
                     SDL_Log("Error initializing SDL_ttf: %s\n", TTF_GetError());
                 }
             }
+
+            // open the controllers dummy !
+            for (int i = 0; i < 2; i++) 
+            {
+                if (SDL_JoystickOpen(i) == NULL) {
+                    SDL_Log("SDL_JoystickOpen: %s\n", SDL_GetError());
+                    SDL_Quit();
+                }
+            }
+
         }
     }
 
@@ -71,7 +85,7 @@ int main (int argc, char* argv[])
     Manager game;
     
     game.init( zRenderer, zWindow );
-    game.change( MenuState::instance() );
+    game.change( GameState::instance() );
     
     // main loop
     while ( game.running() )
