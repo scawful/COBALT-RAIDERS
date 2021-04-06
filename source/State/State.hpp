@@ -5,6 +5,12 @@
 
 #include "Manager.hpp"
 
+typedef struct Vector2f
+{
+    double x;
+    double y;
+} Vector2f;
+
 class State
 {
 public:
