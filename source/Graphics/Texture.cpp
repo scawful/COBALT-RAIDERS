@@ -3,7 +3,7 @@
 
 #include "Texture.hpp"
 
-LTexture::LTexture()
+ZTexture::ZTexture()
 {
     //Initialize
     mTexture = NULL;
@@ -11,13 +11,13 @@ LTexture::LTexture()
     mHeight = 0;
 }
 
-LTexture::~LTexture()
+ZTexture::~ZTexture()
 {
     //Deallocate
     free();
 }
 
-SDL_Texture* LTexture::loadTexture( SDL_Renderer *zRenderer, std::string path )
+SDL_Texture* ZTexture::loadTexture( SDL_Renderer *zRenderer, std::string path )
 {
     //The final texture
     SDL_Texture* newTexture = NULL;
@@ -26,7 +26,7 @@ SDL_Texture* LTexture::loadTexture( SDL_Renderer *zRenderer, std::string path )
     SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
     if( loadedSurface == NULL )
     {
-        printf( "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError() );
+        SDL_Log( "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError() );
     }
     else
     {
@@ -34,7 +34,7 @@ SDL_Texture* LTexture::loadTexture( SDL_Renderer *zRenderer, std::string path )
         newTexture = SDL_CreateTextureFromSurface( zRenderer, loadedSurface );
         if( newTexture == NULL )
         {
-            printf( "Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
+            SDL_Log( "Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
         }
 
         //Get rid of old loaded surface
@@ -44,7 +44,7 @@ SDL_Texture* LTexture::loadTexture( SDL_Renderer *zRenderer, std::string path )
     return newTexture;
 }
 
-bool LTexture::loadFromFile( SDL_Renderer *zRenderer, std::string path )
+bool ZTexture::loadFromFile( SDL_Renderer *zRenderer, std::string path )
 {
     //Get rid of preexisting texture
     free();
@@ -56,7 +56,7 @@ bool LTexture::loadFromFile( SDL_Renderer *zRenderer, std::string path )
     SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
     if( loadedSurface == NULL )
     {
-        printf( "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError() );
+        SDL_Log( "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError() );
     }
     else
     {
@@ -67,7 +67,7 @@ bool LTexture::loadFromFile( SDL_Renderer *zRenderer, std::string path )
         newTexture = SDL_CreateTextureFromSurface( zRenderer, loadedSurface );
         if( newTexture == NULL )
         {
-            printf( "Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
+            SDL_Log( "Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
         }
         else
         {
@@ -85,7 +85,7 @@ bool LTexture::loadFromFile( SDL_Renderer *zRenderer, std::string path )
     return mTexture != NULL;
 }
 
-bool LTexture::loadFromRenderedText( SDL_Renderer *zRenderer, TTF_Font *gFont, std::string textureText, SDL_Color textColor )
+bool ZTexture::loadFromRenderedText( SDL_Renderer *zRenderer, TTF_Font *gFont, std::string textureText, SDL_Color textColor )
 {
     //Get rid of preexisting texture
     free();
@@ -94,7 +94,7 @@ bool LTexture::loadFromRenderedText( SDL_Renderer *zRenderer, TTF_Font *gFont, s
     SDL_Surface* textSurface = TTF_RenderText_Solid( gFont, textureText.c_str(), textColor );
     if ( textSurface == NULL )
     {
-        printf( "Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError() );
+        SDL_Log( "Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError() );
     }
     else
     {
@@ -102,7 +102,7 @@ bool LTexture::loadFromRenderedText( SDL_Renderer *zRenderer, TTF_Font *gFont, s
         this->mTexture = SDL_CreateTextureFromSurface( zRenderer, textSurface );
         if ( mTexture == NULL )
         {
-            printf( "Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError() );
+            SDL_Log( "Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError() );
         }
         else
         {
@@ -119,7 +119,7 @@ bool LTexture::loadFromRenderedText( SDL_Renderer *zRenderer, TTF_Font *gFont, s
     return mTexture != NULL;
 }
 
-void LTexture::free()
+void ZTexture::free()
 {
     //Free texture if it exists
     if( mTexture != NULL )
@@ -131,25 +131,25 @@ void LTexture::free()
     }
 }
 
-void LTexture::setColor( Uint8 red, Uint8 green, Uint8 blue )
+void ZTexture::setColor( Uint8 red, Uint8 green, Uint8 blue )
 {
     //Modulate texture rgb
     SDL_SetTextureColorMod( mTexture, red, green, blue );
 }
 
-void LTexture::setBlendMode( SDL_BlendMode blending )
+void ZTexture::setBlendMode( SDL_BlendMode blending )
 {
     //Set blending function
     SDL_SetTextureBlendMode( mTexture, blending );
 }
         
-void LTexture::setAlpha( Uint8 alpha )
+void ZTexture::setAlpha( Uint8 alpha )
 {
     //Modulate texture alpha
     SDL_SetTextureAlphaMod( mTexture, alpha );
 }
 
-void LTexture::render( SDL_Renderer *zRenderer, int x, int y, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip )
+void ZTexture::render( SDL_Renderer *zRenderer, int x, int y, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip )
 {
     //Set rendering space and render to screen
     SDL_Rect renderQuad = { x, y, mWidth, mHeight };
@@ -165,12 +165,12 @@ void LTexture::render( SDL_Renderer *zRenderer, int x, int y, SDL_Rect* clip, do
     SDL_RenderCopyEx( zRenderer, mTexture, clip, &renderQuad, angle, center, flip );
 }
 
-int LTexture::getWidth()
+int ZTexture::getWidth()
 {
     return mWidth;
 }
 
-int LTexture::getHeight()
+int ZTexture::getHeight()
 {
     return mHeight;
 }

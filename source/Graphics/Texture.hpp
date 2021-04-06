@@ -7,14 +7,14 @@
 #include "../State/State.hpp"
 
 //Texture wrapper class
-class LTexture
+class ZTexture
 {
     public:
         //Initializes variables
-        LTexture();
+        ZTexture();
 
         //Deallocates memory
-        ~LTexture();
+        ~ZTexture();
 
         // Legacy texture loader from path
         SDL_Texture *loadTexture( SDL_Renderer *zRenderer, std::string path );
