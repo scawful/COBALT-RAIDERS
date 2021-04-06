@@ -4,6 +4,7 @@
 #define GameState_hpp
 
 #include "State.hpp"
+#include "../Graphics/Texture.hpp"
 
 class GameState : public State
 {
@@ -31,10 +32,12 @@ private:
     
     SDL_Window *zWindow = NULL;
     SDL_Renderer *zRenderer = NULL;
-    SDL_Texture *backgroundTexture = NULL;
 
-    TTF_Font *gFont = NULL;
+    TTF_Font *statusFont = NULL;
     TTF_Font *menuFont = NULL;
+
+    ZTexture zBackgroundTexture;
+    ZTexture statusTexture;
     
 };
 
