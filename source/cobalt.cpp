@@ -12,6 +12,7 @@
 
 int main (int argc, char* argv[])
 {
+    // Console debug for Ryujinx
     consoleDebugInit(debugDevice_SVC);
 
     SDL_Renderer *zRenderer = NULL;
@@ -26,7 +27,6 @@ int main (int argc, char* argv[])
     }
     else
     {
-        // Create an application window with the following settings:
         zWindow = SDL_CreateWindow(
             "Cobalt Raiders",                   // window title
             SDL_WINDOWPOS_UNDEFINED,            // initial x position
@@ -36,7 +36,6 @@ int main (int argc, char* argv[])
             0                                   // flags - see below
         );
         
-        // Check that the window was successfully created
         if ( zWindow == NULL )
         {
             SDL_Log("SDL_CreateWindow: %s\n", SDL_GetError());
@@ -44,7 +43,6 @@ int main (int argc, char* argv[])
         }
         else
         {
-            //Create renderer for window
             zRenderer = SDL_CreateRenderer( zWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
             if( zRenderer == NULL )
             {
@@ -69,7 +67,7 @@ int main (int argc, char* argv[])
                 }
             }
 
-            // open the controllers dummy !
+            // Opening two controllers, accounting for each joycon
             for (int i = 0; i < 2; i++) 
             {
                 if (SDL_JoystickOpen(i) == NULL) {
@@ -81,10 +79,11 @@ int main (int argc, char* argv[])
         }
     }
 
-
+    // state manager creation
     Manager game;
-    
     game.init( zRenderer, zWindow );
+
+    // default state
     game.change( GameState::instance() );
     
     // main loop
