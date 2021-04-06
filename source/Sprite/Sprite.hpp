@@ -5,6 +5,7 @@
 #define Sprite_hpp
 
 #include "../State/State.hpp"
+#include "../Graphics/Texture.hpp"
 
 class Sprite
 {
