@@ -37,13 +37,17 @@ include $(DEVKITPRO)/libnx/switch_rules
 #   of a homebrew executable (.nro). This is intended to be used for sysmodules.
 #   NACP building is skipped as well.
 #---------------------------------------------------------------------------------
+APP_TITLE 	:= 	Cobalt Raiders
+APP_AUTHOR 	:= 	Justin Scofield
+ICON		:= 	icon.png
+
 TARGET		:=	$(notdir $(CURDIR))
 BUILD		:=	build
-SOURCES		:=	source source/State
+SOURCES		:=	source source/State source/Bullet source/Sprite source/Graphics
 DATA		:=	data
 INCLUDES	:=	include
 ROMFS		:=	romfs
-PC_LIBS     := SDL2_image SDL2_mixer SDL2_ttf sdl2
+PC_LIBS     := 	SDL2_image SDL2_mixer SDL2_ttf sdl2
 
 #---------------------------------------------------------------------------------
 # options for code generation
