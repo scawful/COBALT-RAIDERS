@@ -11,16 +11,19 @@ class Sprite
 {
 private:
     const SDL_Texture* m_texture;
-    SDL_Rect           m_textureRect;
+    ZTexture*          z_texture;
+    SDL_Rect           z_textureRect;
+    SDL_Color          z_textureColor;
+    Vector2f           z_texturePosition;
 
 public:
     Sprite();
 
-    explicit Sprite(const SDL_Texture& texture);
+    explicit Sprite(ZTexture& texture);
 
-    Sprite(const SDL_Texture& texture, const SDL_Rect& rectangle);
+    Sprite(ZTexture& texture, const SDL_Rect& rectangle);
 
-    void setTexture(const SDL_Texture& texture, bool resetRect = false);
+    void setTexture(ZTexture& texture, bool resetRect = false);
 
     void setTextureRect(const SDL_Rect& rectangle);
 
@@ -28,7 +31,9 @@ public:
 
     void setColor(const SDL_Color& color);
 
-    const SDL_Texture* getTexture() const;
+    void render( SDL_Renderer *zRenderer, int x, int y );
+
+    const ZTexture* getTexture() const;
 
     const SDL_Rect& getTextureRect() const;
 
