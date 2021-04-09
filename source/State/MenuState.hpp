@@ -4,6 +4,7 @@
 #define MenuState_hpp
 
 #include "State.hpp"
+#include "../Graphics/Texture.hpp"
 
 class MenuState : public State
 {
@@ -32,8 +33,13 @@ private:
     SDL_Window *zWindow = NULL;
     SDL_Renderer *zRenderer = NULL;
     SDL_Texture *zTexture = NULL;
-    TTF_Font *gFont = NULL;
     TTF_Font *menuFont = NULL;
+    TTF_Font *statusFont = NULL;
+
+    ZTexture statusTexture;
+    ZTexture startGameTexture;
+    ZTexture prototypeTexture;
+    ZTexture crystalTexture;
     
 };
 

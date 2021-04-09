@@ -11,6 +11,39 @@ void MenuState::init( SDL_Renderer *zRenderer, SDL_Window *zWindow )
 {
     this->zRenderer = zRenderer;
     this->zWindow = zWindow;
+
+    // Load image at specified path
+    std::string path = "romfs:/data/crystal.png";
+    
+    if ( !crystalTexture.loadFromFile( zRenderer, path ) )
+    {
+        SDL_Log( "Failed to load texture image!\n" );
+    }
+
+
+    SDL_Color fontColor = { 255, 255, 255 };
+    statusFont = TTF_OpenFont( "romfs:/data/ARCADECLASSIC.TTF", 128 );
+    if ( statusFont == NULL )
+    {
+        SDL_Log( "Failed to load lazy font! SDL_ttf Error: %s\n", TTF_GetError() );
+    }
+    else
+    {
+        if ( !statusTexture.loadFromRenderedText( zRenderer, statusFont, "Cobalt Raiders NX", fontColor ) )
+        {
+            SDL_Log("Failed to render text texture!\n");
+        }
+
+        if ( !prototypeTexture.loadFromRenderedText( zRenderer, TTF_OpenFont( "romfs:/data/ARCADECLASSIC.TTF", 48 ), "Prototype  Version  01", fontColor ) )
+        {
+            SDL_Log("Failed to render text texture!\n");
+        }
+
+        if ( !startGameTexture.loadFromRenderedText( zRenderer, TTF_OpenFont( "romfs:/data/ARCADECLASSIC.TTF", 72 ), "Press any button to start!", fontColor ) )
+        {
+            SDL_Log("Failed to render text texture!\n");
+        }
+    }
 }
 
 void MenuState::cleanup()
@@ -89,12 +122,17 @@ void MenuState::update( Manager* game )
 
 void MenuState::draw( Manager* game )
 {
-    int w = 1920, h = 1080;
     // fill window bounds
+    int w = 1920, h = 1080;
     SDL_SetRenderDrawColor(this->zRenderer, 200, 111, 111, 255);
     SDL_GetWindowSize(this->zWindow, &w, &h);
     SDL_Rect f = {0, 0, 1920, 1080};
     SDL_RenderFillRect(this->zRenderer, &f);
+
+    statusTexture.render( zRenderer, (1920 - statusTexture.getWidth()) / 2,  100);
+    prototypeTexture.render( zRenderer, (1920 - prototypeTexture.getWidth()) / 2,  200);
+    crystalTexture.render( zRenderer, (1920 - crystalTexture.getWidth()) / 2,  275);
+    startGameTexture.render( zRenderer, (1920 - startGameTexture.getWidth()) / 2, 800);
 
     SDL_RenderPresent(this->zRenderer);
 

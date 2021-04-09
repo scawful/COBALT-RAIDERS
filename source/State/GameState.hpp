@@ -5,6 +5,8 @@
 
 #include "State.hpp"
 #include "../Graphics/Texture.hpp"
+#include "../Bullet/Bullet.hpp"
+
 
 class GameState : public State
 {
@@ -38,6 +40,13 @@ private:
 
     ZTexture zBackgroundTexture;
     ZTexture statusTexture;
+    ZTexture startGameTexture;
+    ZTexture prototypeTexture;
+
+    ZTexture bulletTexture;
+    
+    Bullet* redBullet;
+    SDL_Rect redBulletRect;
     
 };
 

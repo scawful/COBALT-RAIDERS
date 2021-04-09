@@ -3,7 +3,6 @@
 
 #include "GameState.hpp"
 #include "MenuState.hpp"
-#include "../Bullet/Bullet.hpp"
 
 GameState GameState::m_GameState;
 
@@ -19,20 +18,18 @@ void GameState::init( SDL_Renderer *zRenderer, SDL_Window *zWindow )
     {
         SDL_Log( "Failed to load texture image!\n" );
     }
-    
-    SDL_Color fontColor = { 255, 255, 255 };
-    statusFont = TTF_OpenFont( "romfs:/data/ARCADECLASSIC.TTF", 128 );
-    if ( statusFont == NULL )
+
+    std::string path2 = "romfs:/data/red_bullet.png";
+
+    if ( !bulletTexture.loadFromFile( zRenderer, path2 ) )
     {
-        SDL_Log( "Failed to load lazy font! SDL_ttf Error: %s\n", TTF_GetError() );
+        SDL_Log("Failed to load bullet texture image!\n");
     }
-    else
-    {
-        if ( !statusTexture.loadFromRenderedText( zRenderer, statusFont, "Cobalt Raiders NX", fontColor ) )
-        {
-            SDL_Log("Failed to render text texture!\n");
-        }
-    }
+
+    Vector2f velocity = {0,0};
+    Vector2f position = {0,0};
+
+    redBullet = new Bullet( &bulletTexture, velocity, position, redBulletRect );
 
     // ===============================================================================
     
@@ -93,8 +90,7 @@ void GameState::update( Manager *game )
 void GameState::draw( Manager *game )
 {
     zBackgroundTexture.render( zRenderer, 0, 0 );
-    //statusTexture.render( zRenderer, (1920 - statusTexture.getWidth()) - (1920 / 4),  83);
-    statusTexture.render( zRenderer, (1920 - statusTexture.getWidth()) / 2,  100);
+    redBullet->getSprite()->render( zRenderer, 0, 0 );
 
     SDL_RenderPresent( zRenderer );
     SDL_Delay(16);
