@@ -84,7 +84,7 @@ int main (int argc, char* argv[])
     game.init( zRenderer, zWindow );
 
     // default state
-    game.change( GameState::instance() );
+    game.change( MenuState::instance() );
     
     // main loop
     while ( game.running() )
