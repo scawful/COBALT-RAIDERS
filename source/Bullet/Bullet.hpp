@@ -13,7 +13,7 @@ private:
     Vector2f velocity;
 
 public:
-    Bullet( SDL_Texture *texture, Vector2f velocity, Vector2f position, SDL_Rect rect )
+    Bullet( ZTexture *texture, Vector2f velocity, Vector2f position, SDL_Rect rect )
     {
         this->velocity = velocity;
         sprite.setTexture( *texture );
