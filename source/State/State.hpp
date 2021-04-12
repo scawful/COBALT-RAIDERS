@@ -15,8 +15,8 @@ public:
     virtual void pause() = 0;
     virtual void resume() = 0;
     
-    virtual void handleEvents(Manager *game) = 0;
-    virtual void update(Manager *game) = 0;
+    virtual void handleEvents(Manager *game, const float& dt) = 0;
+    virtual void update(Manager *game, const float& dt) = 0;
     virtual void draw(Manager *game) = 0;
     
     void changeState(Manager *game, State *state)

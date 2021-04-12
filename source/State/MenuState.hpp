@@ -15,8 +15,8 @@ public:
     void pause();
     void resume();
 
-    void handleEvents(Manager* game);
-    void update(Manager* game);
+    void handleEvents(Manager* game, const float& dt);
+    void update(Manager* game, const float& dt);
     void draw(Manager* game);
 
     static MenuState* instance()

@@ -33,8 +33,9 @@ public:
     void push(State *state);
     void pop();
     
-    void handleEvents();
-    void update();
+    void updateDt();
+    void handleEvents(const float& dt);
+    void update(const float& dt);
     void draw();
     
     bool running() { return m_running; }

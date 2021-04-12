@@ -143,16 +143,16 @@ void Manager::pop()
     }
 }
 
-void Manager::handleEvents()
+void Manager::handleEvents(const float& dt)
 {
     // let the state handle events
-    states.back()->handleEvents(this);
+    states.back()->handleEvents(this, dt);
 }
 
-void Manager::update()
+void Manager::update(const float& dt)
 {
     // let the state update the game
-    states.back()->update(this);
+    states.back()->update(this, dt);
 }
 
 void Manager::draw()

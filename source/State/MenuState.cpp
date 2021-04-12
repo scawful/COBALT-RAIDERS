@@ -61,7 +61,7 @@ void MenuState::resume()
     printf("MenuState Resume\n");
 }
 
-void MenuState::handleEvents( Manager* game )
+void MenuState::handleEvents( Manager* game, const float& dt )
 {
     SDL_Event event;
 
@@ -114,7 +114,7 @@ void MenuState::handleEvents( Manager* game )
     
 }
 
-void MenuState::update( Manager* game )
+void MenuState::update( Manager* game, const float& dt )
 {
     //Clear screen
     SDL_RenderClear(this->zRenderer);
