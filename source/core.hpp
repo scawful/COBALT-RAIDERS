@@ -35,18 +35,6 @@ public:
         return product;
     }
 
-    // scalar operations
-    // Vector2f operator+( const Vector2f& right )
-    // {
-    //     value += right.value;
-    //     return *this;
-    // }
-
-    // Vector2f operator*( const Vector2f& right )
-    // {
-    //     value *= right.value;
-    //     return *this;
-    // }
 };
 
 inline bool operator!=( const SDL_Rect& a, const SDL_Rect& b )
