@@ -2,28 +2,38 @@
 
 #include "Actor.hpp"
 
-Actor::Actor ( ZTexture *texture, Vector2f velocity, Vector2f position, SDL_Rect rect ) 
+Actor::Actor ( ZTexture& texture_sheet, SDL_Rect& rect, Vector2f position ) 
 {
-    this->getSprite()->setPosition(position);
+    this->attacking = false;
+    sprite.setTexture( texture_sheet );
+    sprite.setTextureRect( rect );
+    sprite.setPosition( position );
     
     //this->createHitboxComponent(this->sprite, 40.f, 15.f, 60.f, 70.f);
     this->createMovementComponent(350.f, 15.f, 5.f);
-    //this->createAnimatiomComponent(texture_sheet);
+    this->createAnimatiomComponent(texture_sheet);
     
-    // this->animationComponent->addAnimation("IDLE_RIGHT", 11.f, 0, 0, 3, 0, 156, 100);
-    // this->animationComponent->addAnimation("WALK_RIGHT", 7.f, 0, 1, 3, 1, 156, 100);
-    // this->animationComponent->addAnimation("ATTACK", 7.f, 0, 2, 4, 2, 156, 100);
-    // this->animationComponent->addAnimation("IDLE_LEFT", 7.f, 0, 2, 3, 2, 88, 100);
-    // this->animationComponent->addAnimation("WALK_LEFT", 100.f, 0, 3, 3, 3, 88, 100);
+    this->animationComponent->addAnimation("IDLE_RIGHT", 11.f, 0, 0, 5, 0, 72, 84);
+    this->animationComponent->addAnimation("WALK_RIGHT", 7.f, 0, 1, 7, 1, 72, 84);
+    this->animationComponent->addAnimation("WALK_LEFT", 7.f, 0, 2, 7, 2, 72, 84);
+    this->animationComponent->addAnimation("SPELL_CAST", 7.f, 0, 3, 11, 3, 72, 84);
 }
 
 Actor::~Actor() {
     
 }
 
-void Actor::update(const float & dt) {
+void Actor::update( const float & dt ) 
+{
     
     this->movementComponent->update(dt);
+
+    if (this->attacking)
+    {
+        SDL_Log("attack!");
+        if ( this->animationComponent->play("SPELL_CAST", dt, true) )
+            this->attacking = false;
+    }
     
     if (this->movementComponent->getState(IDLE))
     {
@@ -31,14 +41,14 @@ void Actor::update(const float & dt) {
     }
     else if (this->movementComponent->getState(MOVING_RIGHT))
     {
-        this->sprite.setOrigin(0.f, 0.f);
-        this->sprite.setScale(1.f, 1.f);
+        this->sprite.setOrigin( Vector2f(0.f, 0.f) );
+        this->sprite.setScale( Vector2f(1.f, 1.f) );
         this->animationComponent->play("WALK_RIGHT", dt, this->movementComponent->getVelocity().x, this->movementComponent->getMaxVelocity());
     }
     else if (this->movementComponent->getState(MOVING_LEFT))
     {
-        this->sprite.setOrigin(150.f, 0.f);
-        this->sprite.setScale(-1.f, 1.f);
+        this->sprite.setOrigin( Vector2f(150.f, 0.f) );
+        this->sprite.setScale( Vector2f(-1.f, 1.f) );
         this->animationComponent->play("WALK_RIGHT", dt, this->movementComponent->getVelocity().x, this->movementComponent->getMaxVelocity());
     }
     else if (this->movementComponent->getState(MOVING_UP))
@@ -50,5 +60,10 @@ void Actor::update(const float & dt) {
         this->animationComponent->play("WALK_RIGHT", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity());
     }
     
-    this->hitboxComponent->update();
+    //this->hitboxComponent->update();
+}
+
+void Actor::setAttack()
+{
+    this->attacking = true;
 }

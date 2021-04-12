@@ -10,30 +10,21 @@
 class Actor : public Entity
 {
 private:
-    Sprite sprite;
-    Vector2f velocity;
+    
 
 public:
-    Actor( ZTexture *texture, Vector2f velocity, Vector2f position, SDL_Rect rect )
-    {
-        this->velocity = velocity;
-        sprite.setTexture( *texture );
-        sprite.setTextureRect( rect );
-        sprite.setPosition( position );
-    }
+    bool attacking;
+    Actor( ZTexture& texture_sheet, SDL_Rect& rect, Vector2f position );
+    virtual ~Actor();
 
-    void update( double timeElapsed )
-    {
-        Vector2f newPos = { sprite.getPosition().x + timeElapsed * velocity.x,
-                            sprite.getPosition().y + timeElapsed * velocity.y };
-                    
-        sprite.setPosition( newPos );
-    }
+    virtual void update( const float & dt );
 
     Sprite* getSprite()
     {
         return &sprite;
     }
+
+    void setAttack();
 
 };
 
