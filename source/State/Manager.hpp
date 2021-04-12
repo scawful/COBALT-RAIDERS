@@ -10,6 +10,7 @@
 #include <cmath>
 #include <vector>
 #include <random>
+#include <map>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
@@ -23,13 +24,9 @@ private:
     std::vector<State*> states;
     
     bool m_running;
-    bool m_fullscreen;
     
 public:
-    void init(SDL_Renderer *zRenderer,
-              SDL_Window *zWindow,
-              int width = 1920, int height = 1080,
-              bool fullscreen = false);
+    void init(int width = 1920, int height = 1080);
     void cleanup();
     
     void change(State *state);
@@ -43,10 +40,11 @@ public:
     bool running() { return m_running; }
     void quit() { m_running = false; }
     
-    SDL_Surface *screen;
-    
-    SDL_Window *zWindow;
     SDL_Renderer *zRenderer = NULL;
+    SDL_Window *zWindow = NULL;
+    SDL_Surface *screen;
+    SDL_Joystick *left_joycon = NULL;
+    SDL_Joystick *right_joycon = NULL;
 
 };
 
