@@ -12,10 +12,10 @@ Sprite::Sprite(ZTexture& texture)
     z_texture = &texture;
 }
 
-Sprite::Sprite(ZTexture& texture, const SDL_Rect& rectangle)
+Sprite::Sprite(ZTexture& texture, SDL_Rect& rectangle)
 {
     z_texture = &texture;
-    z_textureRect = rectangle;
+    z_textureRect = &rectangle;
 }
 
 void Sprite::setTexture(ZTexture& texture, bool resetRect)
@@ -23,15 +23,15 @@ void Sprite::setTexture(ZTexture& texture, bool resetRect)
     z_texture = &texture;
 }
 
-void Sprite::setTextureRect(const SDL_Rect& rectangle)
+void Sprite::setTextureRect(SDL_Rect& rectangle)
 {
-    z_textureRect = rectangle;
+    z_textureRect = &rectangle;
 }
 
 void Sprite::setPosition(Vector2f position)
 {
-    z_textureRect.x = position.x;
-    z_textureRect.y = position.y;
+    z_textureRect->x = position.x;
+    z_textureRect->y = position.y;
 
     z_texturePosition.x = position.x;
     z_texturePosition.y = position.y;
@@ -41,6 +41,16 @@ void Sprite::setColor(const SDL_Color& color)
 {
     z_textureColor = color;
     z_texture->setColor( color.r, color.b, color.g );
+}
+
+void Sprite::setOrigin(const Vector2f& position)
+{
+    z_origin = position;
+}
+
+void Sprite::setScale(const Vector2f& factor)
+{
+    z_scale = factor;
 }
 
 void Sprite::render( SDL_Renderer *zRenderer, int x, int y )
@@ -60,7 +70,12 @@ const ZTexture* Sprite::getTexture() const
     return z_texture;
 }
 
-const SDL_Rect& Sprite::getTextureRect() const
+SDL_Texture* Sprite::getRawTexture()
+{
+    return z_texture->getRawTexture();
+}
+
+SDL_Rect* Sprite::getTextureRect()
 {
     return z_textureRect;
 }
