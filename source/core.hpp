@@ -20,7 +20,7 @@ public:
     Vector2f( const double x, const double y ) { }
 
     // scalar value
-    Vector2f( float x ) : value(x) {}
+    Vector2f( float scalar ) : x(scalar), y(scalar) { }
 
     // default operations
     Vector2f operator+( const Vector2f& augend )
@@ -49,36 +49,9 @@ public:
     // }
 };
 
-class DeltaClock
+inline bool operator!=( const SDL_Rect& a, const SDL_Rect& b )
 {
-private:
-    uint32_t start_time;
-    uint32_t current_time;
-    double   elapsed_time;
-
-public:
-    DeltaClock() 
-    { 
-        start_time = SDL_GetTicks();
-    }
-
-    // returns current time in seconds
-    uint32_t getElapsedTime()
-    {
-        current_time = SDL_GetTicks();
-        elapsed_time = (current_time - start_time) / 1000.0; 
-        return current_time;
-    }
-
-    uint32_t restartClock()
-    {
-        uint32_t current = SDL_GetTicks();
-        double elapsed = (current - start_time) / 1000.0;
-        start_time = current;
-
-        return elapsed;
-    }
-    
-};
+    return a.x == b.x && a.y == b.y && a.w == b.w && a.h == b.h;
+}
 
 #endif

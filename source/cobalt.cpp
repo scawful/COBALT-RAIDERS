@@ -5,18 +5,18 @@
 // Toolchain: DEVKITPROA64
 // Dependencies: SDL2, SDL2_image, SDL2_ttf
 
+#include "delta.hpp"
 #include "State/Manager.hpp"
 #include "State/MenuState.hpp"
 #include "State/GameState.hpp"
 
-
 int main (int argc, char* argv[])
 {
+    Manager game;
+    DeltaClock deltaClock;
+
     // Console debug for Ryujinx
     consoleDebugInit(debugDevice_SVC);
-
-    // state manager creation
-    Manager game;
     game.init();
 
     // default state
@@ -25,8 +25,9 @@ int main (int argc, char* argv[])
     // main loop
     while ( game.running() )
     {
-        game.handleEvents();
-        game.update();
+        delta_time = deltaClock.restartClock();
+        game.handleEvents( delta_time );
+        game.update( delta_time );
         game.draw();
     }
 
