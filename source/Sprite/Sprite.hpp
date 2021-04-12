@@ -33,6 +33,8 @@ public:
 
     void render( SDL_Renderer *zRenderer, int x, int y );
 
+    void move( const Vector2f& offset );
+
     const ZTexture* getTexture() const;
 
     const SDL_Rect& getTextureRect() const;

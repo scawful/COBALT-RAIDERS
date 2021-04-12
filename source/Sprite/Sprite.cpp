@@ -48,6 +48,13 @@ void Sprite::render( SDL_Renderer *zRenderer, int x, int y )
     z_texture->render( zRenderer, x, y );
 }
 
+void Sprite::move( const Vector2f& offset )
+{
+    Vector2f currentPosition = getPosition();
+
+    setPosition( currentPosition + offset );
+}
+
 const ZTexture* Sprite::getTexture() const
 {
     return z_texture;
