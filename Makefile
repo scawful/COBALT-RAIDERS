@@ -43,7 +43,7 @@ ICON		:= 	icon.png
 
 TARGET		:=	$(notdir $(CURDIR))
 BUILD		:=	build
-SOURCES		:=	source source/State source/Bullet source/Sprite source/Graphics
+SOURCES		:=	source source/State source/Bullet source/Sprite source/Graphics source/Actor source/Components
 DATA		:=	data
 INCLUDES	:=	include
 ROMFS		:=	romfs
