@@ -165,6 +165,11 @@ void ZTexture::render( SDL_Renderer *zRenderer, int x, int y, SDL_Rect* clip, do
     SDL_RenderCopyEx( zRenderer, mTexture, clip, &renderQuad, angle, center, flip );
 }
 
+SDL_Texture* ZTexture::getRawTexture()
+{
+    return mTexture;
+}
+
 int ZTexture::getWidth()
 {
     return mWidth;
